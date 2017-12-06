@@ -9,8 +9,7 @@ U_theta =  (u_Obs(1) * sin(P_Obs(3)-theta)) - v_Robot(1) * sin(P_Robot(3)-theta)
 h = abs(U_theta)/(sqrt(U_theta^2 + U_r^2));
 
 r_double = min(radius_Obs*gama*sigmoid(1,2,h),d-radius_Obs-radius_robot);
-%fgd
-%gdhdh
+
 if U_r<0
     r_security = radius_Obs + radius_robot + r_double;
 else
