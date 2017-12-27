@@ -1,19 +1,19 @@
-function [phi] = PotentialField(x,Goal,Obs,r_security)
+function [phi] = PotentialField(P_r,G_r,P_o,r_or)
       KG = 1;
-      
+      %r_or = r_o + r_r
       % Goal - Obstacle
-      rG_Obs = sqrt((Obs(1)-Goal(1))^2 + (Obs(2)-Goal(2))^2);
-      b = r_security / (r_security + rG_Obs);
+      rG_Obs = sqrt((P_o(1)-G_r(1))^2 + (P_o(2)-G_r(2))^2);
+      b = r_or / (r_or + rG_Obs);
       
       % Goal Point - Robot
-      rG = sqrt((Goal(1) - x(1))^2 + (Goal(2) - x(2))^2);
-      EGx = KG*(Goal(1) - x(1))/rG^2;
-      EGy = KG*(Goal(2) - x(2))/rG^2;
+      rG = sqrt((G_r(1) - P_r(1))^2 + (G_r(2) - P_r(2))^2);
+      EGx = KG*(G_r(1) - P_r(1))/rG^2;
+      EGy = KG*(G_r(2) - P_r(2))/rG^2;
       
       % Obstacle - Robot
-      rObs = sqrt((Obs(1) - x(1))^2 + (Obs(2) - x(2))^2);
-      EObsx = -b*(Obs(1) - x(1))/rObs^2;
-      EObsy = -b*(Obs(2) - x(2))/rObs^2;
+      rObs = sqrt((P_o(1) - P_r(1))^2 + (P_o(2) - P_r(2))^2);
+      EObsx = -b*(P_o(1) - P_r(1))/rObs^2;
+      EObsy = -b*(P_o(2) - P_r(2))/rObs^2;
       
       Ex = (EGx + EObsx);
       Ey = (EGy + EObsy);
