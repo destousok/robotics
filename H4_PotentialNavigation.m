@@ -1,11 +1,10 @@
-function [x1] = H4_PotentialNavigation(Goal,P_Robot,radius_robot,P_Obs_all,radius_Obs_all,u_Obs_all,gama,ro)
+function [x1] = H4_PotentialNavigation(num_obs_rob,Goal,P_Robot,radius_robot,v,P_Obs_all,radius_Obs_all,u_Obs_all,gama,ro)
 
-time = [0 1];
+time = [0 0.5];
 [t x] = ode23(@vehicle,time,P_Robot);
 x1 = x(end,:);
 
   function dx = vehicle(t,x)     
-      v  = 1; % Robot constant longitudinal velocity
       L = 2; % The wheel base
       
       rG = sqrt((Goal(1) - x(1))^2 + (Goal(2) - x(2))^2);
@@ -13,7 +12,7 @@ x1 = x(end,:);
           v = 0;
       end
       
-      alpha = MultipleObstacles(P_Obs_all,radius_Obs_all,u_Obs_all,Goal,radius_robot,x,v,gama,ro);
+      alpha = MultipleObstacles(num_obs_rob,P_Obs_all,radius_Obs_all,u_Obs_all,Goal,radius_robot,x,v,gama,ro);
       
       K = 2;
       ph = K*(alpha - x(3)); % Orientation Control  ?? 57.2957*
